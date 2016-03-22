@@ -1,0 +1,8 @@
+<div class="container">
+  <h1>Kies je tegenstander</h1>
+  <ul >
+    <li ng-repeat="player in vm.players">
+      <a ng-href="" ng-click="vm.invitePlayer(player.uid)">{{player.name}} ({{player.uid}})</a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,16 @@
+<table class="table table-striped ">
+  <thead>
+    <tr>
+      <th class="text-center" ng-bind="vm.playerOne" colspan="2"></th>
+      <th class="text-center">Round</th>
+      <th class="text-center" ng-bind="vm.playerTwo" colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="score in vm.scores">
+      <td class="text-center" ng-bind="score.one" colspan="2"></td>
+      <td class="text-center" ng-bind="score.round"></td>
+      <td class="text-center" ng-bind="score.two" colspan="2"></td>
+    </tr>
+  </tbody>
+</table>
