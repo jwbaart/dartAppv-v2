@@ -34,7 +34,7 @@
         vm.login = login;
         vm.logout = logout;
         vm.isLoggedIn = AuthService.getAuth;
-        //vm.activeGame - GamesService.activeGame;
+        vm.activeGame - GamesService.activeGame;
         vm.activeGame = activeGame;
 
         function login(provider) {

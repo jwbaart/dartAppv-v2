@@ -3,17 +3,18 @@
 
   angular
     .module('dartApp', [
-      //'ngAnimate',
-      //'ngCookies',
-      //'ngTouch',
-      //'ngSanitize',
-      //'ngMessages',
-      //'ngAria',
-      //'ngResource',
+      'ngAnimate',
+      'ngCookies',
+      'ngTouch',
+      'ngSanitize',
+      'ngMessages',
+      'ngAria',
+      'ngResource',
       'ngRoute',
 
       // Third-party modules
       'firebase',
+      'ui.bootstrap',
 
       // Own modules
       'dartApp.core',
