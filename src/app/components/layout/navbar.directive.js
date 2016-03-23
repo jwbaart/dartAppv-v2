@@ -34,7 +34,6 @@
         vm.login = login;
         vm.logout = logout;
         vm.isLoggedIn = AuthService.getAuth;
-        //vm.activeGame - GamesService.activeGame;
         vm.activeGame = activeGame;
 
         function login(provider) {
@@ -46,8 +45,8 @@
         }
 
         function activeGame() {
-          var authData = AuthService.getAuth(),
-              result = '';
+          var authData = AuthService.getAuth();
+          var result = '';
 
           if (authData) {
             result = '/' + GamesService.activeGame(authData.uid);

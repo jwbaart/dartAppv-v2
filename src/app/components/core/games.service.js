@@ -5,16 +5,16 @@
         .module('dartApp.core')
         .factory('GamesService', GamesService);
 
-    GamesService.$inject = ['$firebaseArray', '$firebaseObject', 'firebaseDataService', '$location'];
+    GamesService.$inject = ['$firebaseArray', '$firebaseObject', 'firebaseDataService', '$location', '$log'];
 
     /* @ngInject */
-    function GamesService($firebaseArray, $firebaseObject, firebaseDataService, $location) {
+    function GamesService($firebaseArray, $firebaseObject, firebaseDataService, $location, $log) {
 
         var games = $firebaseArray(firebaseDataService.games);
 
         function Game(playerOneUid, playerTwoUid) {
-          this.playerOne = playerOneUid || '',
-          this.playerTwo = playerTwoUid || '',
+          this.playerOne = playerOneUid || '';
+          this.playerTwo = playerTwoUid || '';
           this.scores = new Array();
         }
 
@@ -55,7 +55,7 @@
 
             return Promise.resolve(gameRef.key());
           }, function(error) {
-            console.log(error);
+            $log.log(error);
             return Promise.reject(error);
           });
         }
@@ -74,7 +74,7 @@
 
         function addScoreByGame(newScore, gameKey) {
           var scores = getScoresByGame(gameKey);
-          
+
           return scores.$loaded(function() {
 
             var lastScore = scores[scores.length-1];
@@ -93,7 +93,7 @@
             return scores.$add(newScore).then(function (ref) {
               return Promise.resolve(new Score(newScore.round + parseInt(1), newScore.oneTotal, newScore.twoTotal));
             }, function (error) {
-              console.log(error);
+              $log.log(error);
               return Promise.reject(newScore);
             });
           });
@@ -105,12 +105,12 @@
           return scores.$loaded(function() {
             var lastScore = scores[scores.length-1];
 
-            console.log('getLastScoreOfgame() : ');
+            $log.log('getLastScoreOfgame() : ');
             if (lastScore) {
-              console.log(lastScore);
+              $log.log(lastScore);
               return lastScore;
             } else {
-              console.log(new Score());
+              $log.log(new Score());
               return new Score();
             }
           });

@@ -6,10 +6,10 @@
         .service('AuthService', AuthService);
 
     // AuthService.$inject = ['$scope', '$firebaseAuth', 'firebaseDataService'];
-    AuthService.$inject = ['$firebaseAuth', 'firebaseDataService', '$firebaseObject', 'PlayersService'];
+    AuthService.$inject = ['$firebaseAuth', 'firebaseDataService', '$firebaseObject', 'PlayersService', '$log'];
 
     /* @ngInject */
-    function AuthService($firebaseAuth, firebaseDataService, $firebaseObject, PlayersService) {
+    function AuthService($firebaseAuth, firebaseDataService, $firebaseObject, PlayersService, $log) {
     //function AuthService($scope, $firebaseAuth, firebaseDataService) {
         var ref = firebaseDataService.root,
             firebaseAuthObject = $firebaseAuth(ref),
@@ -32,9 +32,8 @@
           switch (provider) {
             case 'google':
               return loginGoogle();
-              break
             default:
-              console.log('Error: Login provider not found');
+              $log.log('Error: Login provider not found');
           }
 
         }

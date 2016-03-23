@@ -12,7 +12,7 @@
         var vm = this;
 
         //console.log($routeParams.gameKey);
-        $firebaseArray(firebaseDataService.games)
+        $firebaseArray(firebaseDataService.games);
 
         vm.games = GamesService.games;
         vm.scores = {};
@@ -26,7 +26,7 @@
 
         function activate() {
           if ($routeParams.hasOwnProperty('gameKey')) {
-            vm.gameKey = $routeParams.gameKey
+            vm.gameKey = $routeParams.gameKey;
             vm.scores = GamesService.getScoresByGame($routeParams.gameKey);
 
             // vm.scores.$loaded(function(scores) {

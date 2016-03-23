@@ -1,6 +1,6 @@
 {
-  "name": "dartAppV2",
-  "version": "0.0.0",
+  "name": "dartApp",
+  "version": "0.1.0",
   "dependencies": {},
   "scripts": {
     "test": "gulp test"
