@@ -5,9 +5,9 @@
         .module('dartApp.core')
         .factory('PlayersService', PlayersService);
 
-    PlayersService.$inject = ['$firebaseObject', 'firebaseDataService', 'GamesService'];
+    PlayersService.$inject = ['$firebaseObject', 'firebaseDataService', 'GamesService', '$log'];
 
-    function PlayersService($firebaseObject, firebaseDataService, GamesService) {
+    function PlayersService($firebaseObject, firebaseDataService, GamesService, $log) {
         var players = $firebaseObject(firebaseDataService.players);
 
         function Player(name, expires, active, uid) {
@@ -33,7 +33,7 @@
 
           players[newPlayer.uid] = newPlayer;
           players.$save().then(function(result) {
-            console.log('Activated player: ' + newPlayer.uid);
+            $log.log('Activated player: ' + newPlayer.uid);
             //GamesService.watchInvitations();
           }, function(error) {
 
@@ -43,10 +43,10 @@
         function removePlayer(authData) {
           players[authData.uid].active = false;
           players.$save().then(function(result) {
-            console.log('Deactivated player: ' + authData.uid);
+            $log.log('Deactivated player: ' + authData.uid);
           }, function(error) {
 
-          });;
+          });
         }
 
         function getPlayer(uid) {

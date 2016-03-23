@@ -27,10 +27,10 @@
         }
     }
 
-    ScoreFormController.$inject = ['GamesService'];
+    ScoreFormController.$inject = ['GamesService', '$log'];
 
     /* @ngInject */
-    function ScoreFormController(GamesService) {
+    function ScoreFormController(GamesService, $log) {
         var vm = this;
 
         vm.addNewScore = addNewScore;
@@ -41,13 +41,11 @@
         activate();
 
         function activate() {
-          console.log('Start activate()');
           GamesService.getLastScoreOfgame(vm.gameKey).then(function(result) {
             result.one = '';
             result.two = '';
             vm.newScore = result;
           });
-          console.log('End activate()');
         }
 
         function addNewScore () {
@@ -60,7 +58,7 @@
 
               });
           } else {
-            console.log('error');
+            $log.log('error');
             //TODO: Generate error message
           }
         }

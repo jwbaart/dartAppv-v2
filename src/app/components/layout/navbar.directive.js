@@ -45,8 +45,8 @@
         }
 
         function activeGame() {
-          var authData = AuthService.getAuth(),
-              result = '';
+          var authData = AuthService.getAuth();
+          var result = '';
 
           if (authData) {
             result = '/' + GamesService.activeGame(authData.uid);

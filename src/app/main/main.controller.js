@@ -5,10 +5,10 @@
     .module('dartApp')
     .controller('MainController', MainController);
 
-  MainController.$inject = ['AuthService', '$location'];
+  MainController.$inject = ['AuthService', '$location', '$log'];
 
   /** @ngInject */
-  function MainController(AuthService, $location) {
+  function MainController(AuthService, $location, $log) {
     var vm = this;
 
     vm.isLoggedIn = AuthService.getAuth;
@@ -20,7 +20,7 @@
     }
 
     function login(provider) {
-      console.log('login()');
+      $log.log('login()');
       AuthService.login(provider).then(function(authData) {
         $location.path('#/game');
       }, function(error) {
