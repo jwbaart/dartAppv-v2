@@ -5,12 +5,13 @@
         .module('dartApp.core')
         .factory('GamesService', GamesService);
 
-    GamesService.$inject = ['$firebaseArray', '$firebaseObject', 'firebaseDataService', '$location', '$log'];
+    GamesService.$inject = ['$firebaseArray', '$firebaseObject', 'firebaseDataService', '$log'];
 
     /* @ngInject */
-    function GamesService($firebaseArray, $firebaseObject, firebaseDataService, $location, $log) {
+    function GamesService($firebaseArray, $firebaseObject, firebaseDataService, $log) {
 
-        var games = $firebaseArray(firebaseDataService.games);
+        //var games = $firebaseArray(firebaseDataService.games);
+        var games = null;
 
         function Game(playerOneUid, playerTwoUid) {
           this.playerOne = playerOneUid || '';
@@ -39,7 +40,8 @@
             getScoresByGame: getScoresByGame,
             addScoreByGame: addScoreByGame,
             activeGame: activeGame,
-            getLastScoreOfgame: getLastScoreOfgame
+            getLastScoreOfgame: getLastScoreOfgame,
+            reset: reset
         };
 
         return service;
@@ -69,7 +71,12 @@
         }
 
         function getScoresByGame(gameKey) {
-          return $firebaseArray(firebaseDataService.games.child(gameKey).child('scores'));
+          if (gameKey && gameKey.length) {
+            return $firebaseArray(firebaseDataService.games.child(gameKey).child('scores'));
+          } else {
+            return false;
+          }
+
         }
 
         function addScoreByGame(newScore, gameKey) {
@@ -117,6 +124,8 @@
         }
 
         function activeGame(playerUid) {
+          createFirebaseConnection();
+
           var lastGame = games[games.length-1],
               result = false;
 
@@ -125,6 +134,21 @@
           }
 
           return result;
+        }
+
+        function createFirebaseConnection() {
+            if (!games) {
+              console.log('createFirebaseConnection - games');
+              games = $firebaseArray(firebaseDataService.games);
+            }
+        }
+
+        function reset() {
+          if (games) {
+            games.$destroy();
+            $log.log('reset - games');
+            games = null;
+          }
         }
 
         // function Throw() {
