@@ -35,6 +35,7 @@
         vm.logout = logout;
         vm.isLoggedIn = AuthService.getAuth;
         vm.activeGame = activeGame;
+        vm.isActive = isActive;
 
         function login(provider) {
           AuthService.login(provider).then(function(authData) {
@@ -65,11 +66,15 @@
               AuthService.logout();
               HelperService.redirect('/');
             });
-
-            // $rootScope.$apply(function() {
-            //   $location.path("/");
-            // });
-
         }
+
+        function isActive(viewLocation) {
+          if ($location.path().length > 1 && viewLocation.length > 1) {
+            return $location.path().indexOf(viewLocation) > -1;
+          } else if ($location.path().length === 1 && viewLocation.length === 1) {
+            return true;
+          }
+        }
+
     }
 })();

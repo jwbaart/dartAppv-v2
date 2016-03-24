@@ -15,15 +15,11 @@
 
     <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
       <ul class="nav navbar-nav">
-        <li class="active"><a ng-href="#/">Home</a></li>
-        <li><a ng-href="#/new-game" ng-show="vm.isLoggedIn()">New game</a></li>
-        <li><a ng-href="#/game{{vm.activeGame()}}" ng-show="vm.isLoggedIn() && vm.activeGame()">Game</a></li>
+        <li ng-class="{ active: vm.isActive('/')}"><a ng-href="#/">Home</a></li>
+        <li ng-class="{ active: vm.isActive('/new-game')}"><a ng-href="#/new-game" ng-show="vm.isLoggedIn()">New game</a></li>
+        <li ng-class="{ active: vm.isActive('/game')}"><a ng-href="#/game{{vm.activeGame()}}" ng-show="vm.isLoggedIn() && vm.activeGame()">Game</a></li>
         <li><a ng-href="/" ng-hide="vm.isLoggedIn()" ng-click="vm.login('google')">Log in</a></li>
         <li><a ng-href="/" ng-show="vm.isLoggedIn()" ng-click="vm.logout()">Log out</a></li>
-        <li ng-show="false">
-          <!-- Todo: When loggin the function is called 3 times per button click -->
-          <button ng-click="vm.activeGame()">activeGame?</button>
-        </li>
       </ul>
     </div>
 </nav>
