@@ -24,6 +24,7 @@
       addPlayer: addPlayer,
       removePlayer: removePlayer,
       getPlayer: getPlayer,
+      getPlayers: getPlayers,
       showPlayers: showPlayers,
       reset: reset
     }
@@ -37,13 +38,9 @@
       var newPlayer = new Player(authData[authData.provider].displayName, authData.expires, true, authData.uid);
 
       players.$loaded(function(playersLoaded) {
-        console.log('Players originial: ');
-        console.log(players);
         players[newPlayer.uid] = newPlayer;
         players.$save().then(function(result) {
           $log.log('Activated player: ' + newPlayer.uid);
-          console.log('Players updated: ');
-          console.log(players);
         }, function(error) {
           $log.log(error);
         });
@@ -55,29 +52,36 @@
 
     function removePlayer(authData) {
       createFirebaseConnection();
-      
-      players.$loaded(function() {
-        console.log(players);
-        console.log(authData.uid);
-        console.log(players[authData.uid]);
+
+      return players.$loaded(function() {
         if (players.hasOwnProperty(authData.uid)) {
           players[authData.uid].active = false;
           players.$save().then(function(result) {
             $log.log('Deactivated player: ' + authData.uid);
+            return Promise.resolve();
           }, function(error) {
             $log.log('removePlayer() couldn\'t find user');
+            return Promise.reject();
           });
         } else {
           $log.log('removePlayer() failed for ' + authData.uid);
+          return Promise.reject();
         }
       },
       function(error) {
         $log.log(error);
+        return Promise.reject();
       });
     }
 
     function getPlayer(uid) {
       return players[uid];
+    }
+
+    function getPlayers() {
+      createFirebaseConnection();
+      $log.log('getPlayers()');
+      return players;
     }
 
     function showPlayers() {
@@ -99,6 +103,7 @@
     function reset() {
       if (players) {
         players.$destroy();
+        $log.log('reset - players');
         players = null;
       }
     }

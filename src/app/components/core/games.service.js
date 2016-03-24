@@ -5,10 +5,10 @@
         .module('dartApp.core')
         .factory('GamesService', GamesService);
 
-    GamesService.$inject = ['$firebaseArray', '$firebaseObject', 'firebaseDataService', '$location', '$log'];
+    GamesService.$inject = ['$firebaseArray', '$firebaseObject', 'firebaseDataService', '$log'];
 
     /* @ngInject */
-    function GamesService($firebaseArray, $firebaseObject, firebaseDataService, $location, $log) {
+    function GamesService($firebaseArray, $firebaseObject, firebaseDataService, $log) {
 
         //var games = $firebaseArray(firebaseDataService.games);
         var games = null;
@@ -146,6 +146,7 @@
         function reset() {
           if (games) {
             games.$destroy();
+            $log.log('reset - games');
             games = null;
           }
         }

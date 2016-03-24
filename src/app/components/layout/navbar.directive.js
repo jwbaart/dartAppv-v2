@@ -25,10 +25,10 @@
         }
     }
 
-    drtNavbarController.$inject = ['AuthService', '$location', 'GamesService', '$rootScope', 'InvitationsService', 'PlayersService'];
+    drtNavbarController.$inject = ['AuthService', '$location', 'GamesService', '$rootScope', 'InvitationsService', 'PlayersService', 'HelperService'];
 
     /* @ngInject */
-    function drtNavbarController(AuthService, $location, GamesService, $rootScope,InvitationsService, PlayersService) {
+    function drtNavbarController(AuthService, $location, GamesService, $rootScope,InvitationsService, PlayersService, HelperService) {
         var vm = this;
 
         vm.login = login;
@@ -40,9 +40,7 @@
           AuthService.login(provider).then(function(authData) {
             PlayersService.addPlayer(authData);
             InvitationsService.watchInvitations();
-            $rootScope.$apply(function() {
-              $location.path("/");
-            });
+            HelperService.redirect('/');
           }, function(error) {
             // TODO: Inform user
           });
@@ -60,15 +58,18 @@
         }
 
         function logout() {
-            PlayersService.removePlayer(AuthService.getAuth());
-            PlayersService.reset();
-            GamesService.reset();
-            InvitationsService.reset();
-            AuthService.logout();
+            PlayersService.removePlayer(AuthService.getAuth()).then(function() {
+              PlayersService.reset();
+              GamesService.reset();
+              InvitationsService.reset();
+              AuthService.logout();
+              HelperService.redirect('/');
+            });
+
             // $rootScope.$apply(function() {
             //   $location.path("/");
             // });
-            $location.path("/");
+
         }
     }
 })();
