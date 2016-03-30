@@ -33,6 +33,27 @@ describe('Testing GameController', function() {
       // $q.when('weee') creates a resolved promise to "weee".
       // this is important since our service is async and returns
       // a promise.
+      var returnPlayers = {
+        "google:108137819545210249395": {
+          "active": true,
+          "expires": 1458907687,
+          "name": "Test user 1",
+          "uid": "google:1081234242340249395"
+        },
+        "google:113517797324394678664": {
+          "active": false,
+          "expires": 1458996090,
+          "name": "Test user 2",
+          "uid": "google:343423478664"
+        },
+        "google:114327271526878124158": {
+          "active": true,
+          "expires": 1458901527,
+          "name": "Test user 3",
+          "uid": "google:11234234234124158"
+        }
+      };
+
       PlayersServiceMock.getPlayers.and.returnValue($q.when('weee'));
 
       // assign $timeout to a scoped variable so we can use
@@ -54,6 +75,10 @@ describe('Testing GameController', function() {
 
   it('scores should be initialized', function() {
     expect(gameController.scores).toEqual({});
+  });
+
+  it('players shoudl be initialized', function () {
+    expect(PlayersServiceMock.getPlayers).toHaveBeenCalled();
   })
 
 
@@ -97,14 +122,14 @@ describe('Testing GameController', function() {
   // });
   //
   //
-  // /* Test 4: Testing an asynchronous service call.
-  //    Since we've mocked the service to return a promise
-  //    (just like the original service did), we need to do a little
-  //    trick with $timeout.flush() here to resolve our promise so the
-  //    `then()` clause in our controller function fires.
-  //
-  //    This will test to see if the `then()` from the promise is wired up
-  //    properly. */
+  /* Test 4: Testing an asynchronous service call.
+     Since we've mocked the service to return a promise
+     (just like the original service did), we need to do a little
+     trick with $timeout.flush() here to resolve our promise so the
+     `then()` clause in our controller function fires.
+
+     This will test to see if the `then()` from the promise is wired up
+     properly. */
   // it('should update fizz asynchronously when test2() is called', function (){
   //   // just make the call
   //   $scope.test2();
