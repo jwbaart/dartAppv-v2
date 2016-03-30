@@ -16,29 +16,24 @@
               scores: '=',
               gameKey: "="
             },
-            link: linkFunc,
             controller: scoreTableController,
             controllerAs: 'vm',
             bindToController: true
         };
 
         return drtScoreTable;
-
-        function linkFunc(scope, el, attr, ctrl) {
-
-        }
     }
 
     scoreTableController.$inject = [];
 
     /* @ngInject */
     function scoreTableController() {
-        var vm = this;
-
-        activate();
-
-        function activate() {
-
-        }
+        // var vm = this;
+        //
+        // activate();
+        //
+        // function activate() {
+        //
+        // }
     }
 })();

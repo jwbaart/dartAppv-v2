@@ -12,17 +12,12 @@
             templateUrl: 'app/components/layout/navbar.html',
             scope: {
             },
-            link: linkFunc,
             controller: drtNavbarController,
             controllerAs: 'vm',
             bindToController: true
         };
 
         return drtNavbar;
-
-        function linkFunc(scope, el, attr, ctrl) {
-
-        }
     }
 
     drtNavbarController.$inject = ['AuthService', '$location', 'GamesService', '$rootScope', 'InvitationsService', 'PlayersService', 'HelperService'];
@@ -42,7 +37,7 @@
             PlayersService.addPlayer(authData);
             InvitationsService.watchInvitations();
             HelperService.redirect('/');
-          }, function(error) {
+          }, function() {
             // TODO: Inform user
           });
         }

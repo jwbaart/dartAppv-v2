@@ -14,17 +14,12 @@
               scores: "=",
               gameKey: "="
             },
-            link: linkFunc,
             controller: ScoreFormController,
             controllerAs: 'vm',
             bindToController: true
         };
 
         return drtScoreForm;
-
-        function linkFunc(scope, el, attr, ctrl) {
-
-        }
     }
 
     ScoreFormController.$inject = ['GamesService', '$log'];
@@ -54,7 +49,7 @@
 
               GamesService.addScoreByGame(vm.newScore, vm.gameKey).then(function (newScore) {
                 vm.newScore = newScore;
-              }, function(error) {
+              }, function() {
 
               });
           } else {

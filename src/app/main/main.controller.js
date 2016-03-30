@@ -21,9 +21,9 @@
 
     function login(provider) {
       $log.log('login()');
-      AuthService.login(provider).then(function(authData) {
+      AuthService.login(provider).then(function() {
         $location.path('#/game');
-      }, function(error) {
+      }, function() {
         // TODO: Inform user
       });
     }

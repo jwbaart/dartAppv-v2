@@ -37,9 +37,9 @@
       createFirebaseConnection();
       var newPlayer = new Player(authData[authData.provider].displayName, authData.expires, true, authData.uid);
 
-      players.$loaded(function(playersLoaded) {
+      players.$loaded(function() {
         players[newPlayer.uid] = newPlayer;
-        players.$save().then(function(result) {
+        players.$save().then(function() {
           $log.log('Activated player: ' + newPlayer.uid);
         }, function(error) {
           $log.log(error);
@@ -56,10 +56,10 @@
       return players.$loaded(function() {
         if (players.hasOwnProperty(authData.uid)) {
           players[authData.uid].active = false;
-          players.$save().then(function(result) {
+          players.$save().then(function() {
             $log.log('Deactivated player: ' + authData.uid);
             return Promise.resolve();
-          }, function(error) {
+          }, function() {
             $log.log('removePlayer() couldn\'t find user');
             return Promise.reject();
           });
@@ -86,7 +86,7 @@
 
     function showPlayers() {
       createFirebaseConnection()
-      players.$loaded(function (result) {
+      players.$loaded(function () {
         $log.log(players);
       }, function(error) {
         $log.log(error);

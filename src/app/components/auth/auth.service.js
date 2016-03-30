@@ -10,14 +10,14 @@
     /* @ngInject */
     function AuthService($firebaseAuth, firebaseDataService, $firebaseObject, PlayersService, $log) {
         var ref = firebaseDataService.root,
-            firebaseAuthObject = $firebaseAuth(ref),
-            authData = {};
+            firebaseAuthObject = $firebaseAuth(ref);
 
         var service = {
           login: login,
           logout: logout,
           isLoggedIn: firebaseAuthObject.$requireAuth,
-          getAuth: getAuth
+          getAuth: getAuth,
+          waitForAuth: waitForAuth
         };
 
         return service;
@@ -43,16 +43,16 @@
           })
         }
 
-        function isLoggedIn() {
-          return
-        }
-
         function getAuth() {
           return firebaseAuthObject.$getAuth();
         }
 
         function logout() {
           firebaseAuthObject.$unauth();
+        }
+
+        function waitForAuth() {
+          return firebaseAuthObject.$waitForAuth();
         }
 
     }

@@ -55,7 +55,7 @@
           return games.$add(newGame).then(function(gameRef) {
             var gameKey = gameRef.key();
 
-            return Promise.resolve(gameRef.key());
+            return Promise.resolve(gameKey);
           }, function(error) {
             $log.log(error);
             return Promise.reject(error);
@@ -97,7 +97,7 @@
               newScore.twoTotal = parseInt(newScore.two);
             }
 
-            return scores.$add(newScore).then(function (ref) {
+            return scores.$add(newScore).then(function () {
               return Promise.resolve(new Score(newScore.round + parseInt(1), newScore.oneTotal, newScore.twoTotal));
             }, function (error) {
               $log.log(error);
@@ -117,7 +117,6 @@
               $log.log(lastScore);
               return lastScore;
             } else {
-              $log.log(new Score());
               return new Score();
             }
           });
@@ -138,7 +137,7 @@
 
         function createFirebaseConnection() {
             if (!games) {
-              console.log('createFirebaseConnection - games');
+              //console.log('createFirebaseConnection - games');
               games = $firebaseArray(firebaseDataService.games);
             }
         }
