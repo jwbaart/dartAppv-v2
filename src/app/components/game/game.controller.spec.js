@@ -1,5 +1,5 @@
 describe('Testing GameController', function() {
-  var $scope, gameController, $timeout;
+  var gameController, $timeout;
 
   /* declare our mocks out here
    * so we can use them through the scope
@@ -25,9 +25,7 @@ describe('Testing GameController', function() {
     // $controller - injected to create an instance of our controller.
     // $q - injected so we can create promises for our mocks.
     // _$timeout_ - injected to we can flush unresolved promises.
-    inject(function($rootScope, $controller, $q, _$timeout_) {
-      // create a scope object for us to use.
-      $scope = $rootScope.$new();
+    inject(function($controller, $q, _$timeout_) {
 
       // set up the returns for our PlayersServiceMock
       // $q.when('weee') creates a resolved promise to "weee".
@@ -67,7 +65,6 @@ describe('Testing GameController', function() {
       // will be run, so anything that occurs inside of that
       // will already be done before the first spec.
       gameController = $controller('GameController', {
-        $scope: $scope,
         PlayersService: PlayersServiceMock
       });
     });
