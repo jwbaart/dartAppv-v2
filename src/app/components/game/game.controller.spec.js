@@ -74,7 +74,11 @@ describe('Testing GameController', function() {
     expect(gameController.scores).toEqual({});
   });
 
-  it('players shoudl be initialized', function () {
+  it('gameKey should be initialized', function() {
+    expect(gameController.gameKey).toEqual('');
+  });
+
+  it('players should be initialized', function () {
     expect(PlayersServiceMock.getPlayers).toHaveBeenCalled();
   })
 
