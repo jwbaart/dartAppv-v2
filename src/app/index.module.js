@@ -20,7 +20,8 @@
       'dartApp.core',
       'dartApp.auth',
       'dartApp.layout',
-      'dartApp.game'
+      'dartApp.game',
+      'dartApp.admin'
     ]);
 
 })();

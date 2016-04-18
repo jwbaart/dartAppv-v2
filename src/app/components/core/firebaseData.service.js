@@ -15,7 +15,8 @@
             players: root.child('players'),
             games: root.child('games'),
             invitations: root.child('invitations'),
-            scores: root.child('scores')
+            scores: root.child('scores'),
+            gameTypes: root.child('gameTypes')
         };
 
         return service;

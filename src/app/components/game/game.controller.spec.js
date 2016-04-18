@@ -1,3 +1,8 @@
+//var MockFirebase = require('mockfirebase').MockFirebase;
+//console.log(new mockfirebase());
+
+
+
 describe('Testing GameController', function() {
   var gameController, $timeout;
 

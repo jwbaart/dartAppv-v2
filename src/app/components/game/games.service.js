@@ -13,9 +13,10 @@
         //var games = $firebaseArray(firebaseDataService.games);
         var games = null;
 
-        function Game(playerOneUid, playerTwoUid) {
+        function Game(playerOneUid, playerTwoUid, gameType) {
           this.playerOne = playerOneUid || '';
           this.playerTwo = playerTwoUid || '';
+          this.gameType = gameType || '';
           this.scores = new Array();
         }
 
@@ -48,9 +49,9 @@
 
         ///////////////
 
-        function addGame(playerOneUid, playerTwoUid) {
+        function addGame(playerOneUid, playerTwoUid, gameType) {
 
-          var newGame = new Game(playerOneUid, playerTwoUid);
+          var newGame = new Game(playerOneUid, playerTwoUid, gameType);
 
           return games.$add(newGame).then(function(gameRef) {
             var gameKey = gameRef.key();
@@ -68,6 +69,10 @@
           //return games.$keyAt(gameKey);
 
           return games.$getRecord(gameKey);
+        }
+
+        function getGameTypes() {
+          return $firebaseArray(firebaseDataService.gameTypes);
         }
 
         function getScoresByGame(gameKey) {
@@ -107,19 +112,21 @@
         }
 
         function getLastScoreOfgame(gameKey) {
-          var scores = getScoresByGame(gameKey);
+          if (gameKey) {
+            var scores = getScoresByGame(gameKey);
 
-          return scores.$loaded(function() {
-            var lastScore = scores[scores.length-1];
+            return scores.$loaded(function() {
+              var lastScore = scores[scores.length-1];
 
-            $log.log('getLastScoreOfgame() : ');
-            if (lastScore) {
-              $log.log(lastScore);
-              return lastScore;
-            } else {
-              return new Score();
-            }
-          });
+              $log.log('getLastScoreOfgame() : ');
+              if (lastScore) {
+                $log.log(lastScore);
+                return lastScore;
+              } else {
+                return new Score();
+              }
+            });
+          }
         }
 
         function activeGame(playerUid) {

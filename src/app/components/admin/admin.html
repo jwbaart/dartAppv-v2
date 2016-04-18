@@ -1,0 +1,73 @@
+<div class="container">
+  <h1>Game Types</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Naam</th>
+        <th>Beschrijving</th>
+        <th>Template naam</th>
+        <th>Actief?</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="gameType in vm.getGameTypes()">
+        <td>
+          <span ng-show="!editName" ng-click="editName = !editName">{{gameType.name}}</span>
+          <input type="text" ng-show="editName" ng-model="gameType.name">
+          <button class="btn btn-xs btn-primary" ng-click="vm.updateGameType(gameType); editName = !editName" ng-show="editName">Save</button>
+        </td>
+        <td>
+          <span ng-show="!editDescription" ng-click="editDescription = !editDescription">{{gameType.description}}</span>
+          <!-- <input type="text" ng-show="editDescription" ng-model="gameType.description"> -->
+          <textarea ng-show="editDescription" ng-model="gameType.description" rows="3" cols="40"></textarea>
+          <button class="btn btn-xs btn-primary" ng-click="vm.updateGameType(gameType); editDescription = !editDescription" ng-show="editDescription">Save</button>
+        </td>
+        <td>
+          <span ng-show="!editTemplateName" ng-click="editTemplateName = !editTemplateName">{{gameType.templateName}}</span>
+          <input type="text" ng-show="editTemplateName" ng-model="gameType.templateName">
+          <button class="btn btn-xs btn-primary" ng-click="vm.updateGameType(gameType); editTemplateName = !editTemplateName" ng-show="editTemplateName">Save</button>
+        </td>
+        <td>
+          <button class="btn btn-xs" ng-class="gameType.active ? 'btn-success' : 'btn-warning'" ng-click="vm.toggleGameTypeState(gameType)">{{gameType.active ? 'Ja' : 'Nee'}}</button>
+        </td>
+        <td>
+          <button class="btn btn-xs btn-danger" ng-click="vm.removeGameType(gameType)">Verwijder</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form class="form" name="vm.newGameTypeForm" ng-submit="vm.newGameTypeForm.$valid && vm.addNewGameType()">
+    <div class="form-group" ng-class="(vm.newGameTypeForm.name.$touched && vm.newGameTypeForm.name.$invalid) ? 'has-error' : ''">
+      <!--  -->
+      <label for="name">Game type</label>
+      <input type="text" class="form-control" name="name" placeholder="Naam" ng-model="vm.newGameType.name" required>
+
+    </div>
+    <div ng-messages="vm.newGameTypeForm.name.$error" ng-show="vm.newGameTypeForm.name.$touched && vm.newGameTypeForm.name.$invalid">
+        <div class="alert alert-danger" role="alert">
+          Game type is niet ingevuld.
+        </div>
+    </div>
+    <div class="form-group">
+      <!--  -->
+      <label for="description">Beschrijving</label>
+      <textarea class="form-control" name="description" rows="3" placeholder="Naam" ng-model="vm.newGameType.description"></textarea>
+
+    </div>
+    <div class="form-group" ng-class="(vm.newGameTypeForm.templateName.$touched && vm.newGameTypeForm.templateName.$invalid) ? 'has-error' : ''">
+      <!--  -->
+      <label for="templateName">Template naam</label>
+      <input type="text" class="form-control" name="templateName" placeholder="Naam" ng-model="vm.newGameType.templateName" required>
+
+    </div>
+    <div ng-messages="vm.newGameTypeForm.templateName.$error" ng-show="vm.newGameTypeForm.templateName.$touched && vm.newGameTypeForm.templateName.$invalid">
+        <div class="alert alert-danger" role="alert">
+          Template naam is niet ingevuld.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Voeg toe</button>
+  </form>
+</div>

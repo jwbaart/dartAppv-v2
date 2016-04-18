@@ -20,10 +20,10 @@
         return drtNavbar;
     }
 
-    drtNavbarController.$inject = ['AuthService', '$location', 'GamesService', '$rootScope', 'InvitationsService', 'PlayersService', 'HelperService'];
+    drtNavbarController.$inject = ['AuthService', '$location', 'GamesService', '$rootScope', 'InvitationsService', 'PlayersService', 'HelperService', 'AdminService'];
 
     /* @ngInject */
-    function drtNavbarController(AuthService, $location, GamesService, $rootScope,InvitationsService, PlayersService, HelperService) {
+    function drtNavbarController(AuthService, $location, GamesService, $rootScope,InvitationsService, PlayersService, HelperService, AdminService) {
         var vm = this;
 
         vm.login = login;
@@ -31,6 +31,7 @@
         vm.isLoggedIn = AuthService.getAuth;
         vm.activeGame = activeGame;
         vm.isActive = isActive;
+        vm.isAdmin = PlayersService.isAdmin;
 
         function login(provider) {
           AuthService.login(provider).then(function(authData) {
@@ -58,6 +59,7 @@
               PlayersService.reset();
               GamesService.reset();
               InvitationsService.reset();
+              AdminService.reset();
               AuthService.logout();
               HelperService.redirect('/');
             });

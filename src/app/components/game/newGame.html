@@ -1,8 +1,38 @@
 <div class="container">
   <h1>Kies je tegenstander</h1>
-  <ul >
+  <!-- <ul>
     <li ng-repeat="player in vm.players" ng-show="player.active">
-      <a ng-href="" ng-click="vm.invitePlayer(player.uid)"  class="">{{player.name}} ({{player.active}} {{player.uid}})</a>
+      <a ng-href="" ng-click="vm.invitePlayer(player.uid)" class="">{{player.name}} ({{player.active}} {{player.uid}})</a>
     </li>
-  </ul>
+  </ul> -->
+
+  <form class="form-inline" name="vm.newGameForm" ng-submit="vm.newGameForm.$valid && vm.addNewGame(vm.newGame.opponent, vm.newGame.gameType)">
+    <div class="form-group" ng-class="(vm.newGameForm.opponent.$invalid && vm.newGameForm.opponent.$touched) ? 'has-error' : ''">
+      <select class="form-control" ng-model="vm.newGame.opponent" name="opponent" required>
+        <option value="" disabled="disabled">Tegenstander {{vm.uid}}</option>
+        <option ng-repeat="player in vm.players" ng-show="player.active" value="{{player.uid}}">
+          {{player.name}} ({{player.uid}})
+        </option>
+      </select>
+    </div>
+    <div ng-messages="vm.newGameForm.opponent.$error" ng-show="vm.newGameForm.opponent.$touched && vm.newGameForm.opponent.$invalid">
+        <div class="alert alert-danger" role="alert">
+          Tegenstander is niet geselecteerd.
+        </div>
+    </div>
+    <div class="form-group" ng-class="(vm.newGameForm.gameType.$error.required && vm.newGameForm.gameType.$dirty) ? 'has-error' : ''">
+      <select class="form-control" ng-model="vm.newGame.gameType" name="gameType" required>
+        <option value="" disabled="disabled">Game type</option>
+        <option ng-repeat="gameType in vm.getGameTypes() | filter: { active: true}" value="{{gameType.name}}">
+          {{gameType.name}}
+        </option>
+      </select>
+    </div>
+    <div ng-messages="vm.newGameForm.gameType.$error" ng-show="vm.newGameForm.gameType.$touched && vm.newGameForm.gameType.$invalid">
+        <div class="alert alert-danger" role="alert">
+          Game type is niet geselecteerd.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Let's play!</button>
+  </form>
 </div>

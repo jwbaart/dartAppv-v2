@@ -5,12 +5,13 @@
         .module('dartApp.auth')
         .service('AuthService', AuthService);
 
-    AuthService.$inject = ['$firebaseAuth', 'firebaseDataService', '$firebaseObject', 'PlayersService', '$log'];
+    AuthService.$inject = ['$firebaseAuth', 'firebaseDataService', '$firebaseObject', '$log'];
 
     /* @ngInject */
-    function AuthService($firebaseAuth, firebaseDataService, $firebaseObject, PlayersService, $log) {
+    function AuthService($firebaseAuth, firebaseDataService, $firebaseObject, $log) {
         var ref = firebaseDataService.root,
-            firebaseAuthObject = $firebaseAuth(ref);
+            firebaseAuthObject = $firebaseAuth(ref),
+            authData = null;
 
         var service = {
           login: login,
@@ -36,7 +37,8 @@
         }
 
         function loginGoogle() {
-          return ref.authWithOAuthPopup("google").then(function(authData) {
+          return ref.authWithOAuthPopup("google").then(function(firebaseAuthData) {
+            authData = firebaseAuthData;
             return Promise.resolve(authData);
           }, function(error) {
             return Promise.reject(error);
@@ -44,10 +46,15 @@
         }
 
         function getAuth() {
-          return firebaseAuthObject.$getAuth();
+          if (authData === null) {
+            authData = firebaseAuthObject.$getAuth();
+          }
+
+          return authData;
         }
 
         function logout() {
+          authData = null;
           firebaseAuthObject.$unauth();
         }
 
